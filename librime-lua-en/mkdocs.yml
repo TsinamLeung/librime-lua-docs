@@ -1,0 +1,13 @@
+site_name: librime-lua
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - API: api.md
+theme: 
+  name: readthedocs
+  highlightjs: true
+  hljs_style: monokai-sublime
+  hljs_languages:
+    - bash
+    - c++
+    - lua
