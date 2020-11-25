@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>API - librime-lua</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "API";
+    var mkdocs_page_input_path = "api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c++.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lua.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> librime-lua</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">API</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#example">Example</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#init">init</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#func">func</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fini">fini</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#librime-lua-built-in-component">librime-lua built-in component</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dictentry">DictEntry</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#code_2">Code</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_1">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#commitentry">CommitEntry</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_2">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_1">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#memory">Memory</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_3">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_2">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#segment">Segment</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_4">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_3">Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_1">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_1">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#candidate">Candidate</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_5">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_4">Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_2">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_2">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#translation">Translation</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_6">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_5">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reversedb">ReverseDb</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_7">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_6">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#segmentation">Segmentation</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_7">Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_3">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_3">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#menu">Menu</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_8">Functions</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#keyevent">KeyEvent</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_8">Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_4">Getters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#engine">Engine</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_9">Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_5">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_4">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#context_1">Context</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_10">Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_6">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_5">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#preedit_4">Preedit</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_7">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_6">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#composition_2">Composition</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_11">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#schema_1">Schema</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_9">Functions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#getters_8">Getters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#setters_7">Setters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#config_2">Config</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_12">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#connection">Connection</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_13">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#notifier">Notifier</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_14">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#optionupdatenotifier">OptionUpdateNotifier</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_15">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#propertyupdatenotifier">PropertyUpdateNotifier</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_16">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#keyeventnotifer">KeyEventNotifer</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#methods_17">Methods</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#log">Log</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#functions_10">Functions</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">librime-lua</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="module">Module</h1>
+<blockquote>
+<p>All librime-lua module should export as a table like <code>{init=function, func=function, fini=function}</code></p>
+</blockquote>
+<p><strong>Tips:</strong> <em>in this document parameters were presented as <code>function(parameter : type)</code> or <code>function(type)</code></em></p>
+<h2 id="example">Example</h2>
+<p><strong>example.schema.yaml</strong></p>
+<pre><code class="YAML">engine: # binding lua_function to rime components
+  translators:
+    - lua_translator@lua_tran   # lua_tran.func(input,Segment,env)
+  filters:
+    - lua_filter@lua_filt # lua_filt.func(input)
+  processor:
+    - lua_processor@lua_proc # lua_proc.func(KeyEvent,env)
+</code></pre>
+
+<p><strong>rime.lua</strong></p>
+<pre><code class="lua">lua_tran = require(&quot;aTranslator&quot;)
+lua_filt = require(&quot;aFilter&quot;)
+lua_proc = require(&quot;aProcessor&quot;)
+</code></pre>
+
+<p><strong>aTranslator.lua</strong></p>
+<pre><code class="lua">
+local function main(input,segment,env)
+    print(env.hello)
+    -- helloRime
+end
+
+local function destory()
+    print(&quot;Destroied!&quot;)
+end
+
+local function prepare(env)
+    env.hello = &quot;helloRime&quot;
+end
+
+return {init = prepare,func = main,fini = destory}
+</code></pre>
+
+<p><strong>aFilter.lua</strong></p>
+<pre><code class="lua">local function filter(input)
+   local l = {}
+   for cand in input:iter() do
+      if (utf8.len(cand.text) == 1) then
+     yield(cand)
+      else
+     table.insert(l, cand)
+      end
+   end
+   for i, cand in ipairs(l) do
+      yield(cand)
+   end
+end
+
+return filter
+-- or 
+-- return {init = nil,func = filter, fini = nil}
+</code></pre>
+
+<p><strong>aProcessor</strong></p>
+<pre><code>local function filter(key,env)
+    print(key.keycode)
+end
+
+local function init(env)
+    print(env.engine.schema.schema_id)
+end
+
+return {init = init, func = filter, fini = nil}
+</code></pre>
+
+<h2 id="init">init</h2>
+<blockquote>
+<p><code>init(env)</code> would be called when Initializing. </p>
+<p><code>env</code> is the global variable of librime-Lua containing the librime environment, which has the following properties.</p>
+<p><code>env.engine</code> type of <em>engine</em> and <code>env.name_space</code> type of <em>string</em></p>
+<p>You could bind variables to env and use it in your module.</p>
+</blockquote>
+<pre><code class="lua">-- in test.lua
+
+function ModuleInit(env)
+    env.memory = Memory(env.engine,env.engine.schema)
+    env.pyrdb = ReverseDb(&quot;build/terra_pinyin.reverse.bin&quot;)
+end
+
+return {init = ModuleInit}
+</code></pre>
+
+<h2 id="func">func</h2>
+<blockquote>
+<p><code>func</code> would be called when rime is attempting to call the module.</p>
+<p>Which parameters would be passed depending on which rime component bind with the Lua module.</p>
+<p>If Module bind with Translator. <code>func(input, Segment, env)</code> Would be called by <code>Translator::Query</code>. tips: <code>input</code> is type of <code>string</code></p>
+<p>If Module bind with Filter. <code>func(Translation, env)</code> would be called <code>Filter::apply</code></p>
+<p>If Module bind with Processor. <code>func(KeyEvent, env)</code> would be called by <code>Processor::ProcessKeyEvent</code></p>
+</blockquote>
+<h2 id="fini">fini</h2>
+<blockquote>
+<p>When LuaTranslator, LuaFilter, LuaProcess being destoried <code>fini</code> would be called </p>
+</blockquote>
+<h2 id="librime-lua-built-in-component">librime-lua built-in component</h2>
+<h3 id="dictentry">DictEntry</h3>
+<blockquote>
+<h4 id="functions">Functions</h4>
+<blockquote>
+<h5 id="dictentry_1">DictEntry()</h5>
+</blockquote>
+<h4 id="getters">Getters</h4>
+<blockquote>
+<h5 id="text">text</h5>
+<h5 id="comment">comment</h5>
+<h5 id="preedit">preedit</h5>
+<h5 id="weight">weight</h5>
+<h5 id="commit_count">commit_count</h5>
+<h5 id="custom_code">custom_code</h5>
+<h5 id="remaining_code_length">remaining_code_length</h5>
+<h5 id="code">code</h5>
+</blockquote>
+<h4 id="setters">Setters</h4>
+<blockquote>
+<h5 id="text_1">text</h5>
+<h5 id="comment_1">comment</h5>
+<h5 id="preedit_1">preedit</h5>
+<h5 id="weight_1">weight</h5>
+<h5 id="commit_count_1">commit_count</h5>
+<h5 id="custom_code_1">custom_code</h5>
+<h5 id="remaining_code_length_1">remaining_code_length</h5>
+<h5 id="code_1">code</h5>
+</blockquote>
+</blockquote>
+<h3 id="code_2">Code</h3>
+<blockquote>
+<h4 id="functions_1">Functions</h4>
+<blockquote>
+<h5 id="code_3">Code()</h5>
+</blockquote>
+<h4 id="methods">Methods</h4>
+<blockquote>
+<h5 id="push">push</h5>
+<h5 id="print">print</h5>
+</blockquote>
+</blockquote>
+<h3 id="commitentry">CommitEntry</h3>
+<blockquote>
+<h4 id="functions_2">Functions</h4>
+<blockquote>
+<h5 id="commitentry_1">CommitEntry()</h5>
+</blockquote>
+<h4 id="methods_1">Methods</h4>
+<blockquote>
+<h5 id="get">get()</h5>
+</blockquote>
+</blockquote>
+<h3 id="memory">Memory</h3>
+<blockquote>
+<h4 id="introduction">Introduction</h4>
+<blockquote>
+<p>A compoent that could access to <code>Dictionary</code> and <code>UserDictionary</code></p>
+</blockquote>
+<h4 id="functions_3">Functions</h4>
+<blockquote>
+<h5 id="memoryengine-schema">Memory(Engine, Schema)</h5>
+<blockquote>
+<p>Returns the Instance of <em>Memory</em></p>
+<p>Instance a <code>Memory</code> Object with given <code>Engine</code> and <code>Scehma</code></p>
+</blockquote>
+<h5 id="custommemoryengine-schema_id-namespacetranslator">CustomMemory(Engine, schema_id="", namespace="translator")</h5>
+<blockquote>
+<p>Returns the Instance of <em>Memory</em></p>
+<p>Instance a <code>Memory</code> Object with given <code>Engine</code> (running Engine), a <code>scheme_id</code>, and <code>namespace</code></p>
+<p><code>scheme_id</code> were defined on input method schema</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><em>cangjie5.schema.yaml</em></p>
+<pre><code class="yaml">schema:
+  schema_id: cangjie5 # this one
+  name: 倉頡五代
+  version: &quot;1.1.test&quot;
+</code></pre>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p><code>namespace</code> is used to collect yaml tag of <code>namespace/dictionary</code> <code>namespace/enable_user_dict</code> and <code>namespace/db_class</code> in schema.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><em>cangjie5.schema.yaml</em></p>
+<pre><code class="yaml">translator:
+  dictionary: cangjie5 #this one!
+  # enable_user_dict: true #this one
+  # db_class: tabledb #this one
+  enable_charset_filter: true
+  enable_sentence: true
+  enable_encoder: true
+  encode_commit_history: true
+  max_phrase_length: 5
+  preedit_format:
+    - 'xform/^([a-z]*)$/$1\t（\U$1\E）/'
+    - &quot;xlit|ABCDEFGHIJKLMNOPQRSTUVWXYZ|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|&quot;
+  comment_format:
+    - &quot;xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符～|&quot;
+  disable_user_dict_for_patterns:
+    - &quot;^z.*$&quot;
+    - &quot;^yyy.*$&quot;
+</code></pre>
+
+<blockquote>
+<h4 id="methods_2">Methods</h4>
+<blockquote>
+<h5 id="dictlookupinput-string-isexpand-boolean">dictLookup(input : string, isExpand : boolean)</h5>
+<blockquote>
+<p>Returns <em>true</em> if Lookup success.</p>
+<p>The results are stored in <code>DicionaryIterator</code> inside <code>Memory</code>.</p>
+<p>If <code>isExpand</code> were true, it would expand your <code>input</code> as a prefix. For example, the input is "hq", all results with the prefix "hq" in code  would be output.</p>
+</blockquote>
+<h5 id="userlookupinput-string-isexpand-boolean">userLookup(input : string, isExpand : boolean)</h5>
+<blockquote>
+<p>Returns <em>true</em> if Lookup success.</p>
+<p>The results are stored in <code>UserDicionaryIterator</code> inside <code>Memory</code>.</p>
+<p>If <code>isExpand</code> were true, it would expand your <code>input</code> as a prefix. For example, the input is "hq", all results with the prefix "hq" in code  would be output.</p>
+</blockquote>
+<h5 id="iter_dict">iter_dict()</h5>
+<blockquote>
+<p>Returns a Lua Iterator Of <code>Dictionary</code> Lookup Results which iterates a dictEntry.</p>
+</blockquote>
+<h5 id="iter_user">iter_user()</h5>
+<blockquote>
+<p>Returns a Lua Iterator Of <code>UserDictionary</code> Lookup Results which iterates a dictEntry.</p>
+</blockquote>
+<h5 id="memorizefunctioncommitentry">memorize(function(CommitEntry))</h5>
+<blockquote>
+<p>To bind a lua_Function to <code>Memory::memorize</code> The Function would be called after commit, passing <code>CommitEntry</code> (contains committed <code>dictEntry</code>) to it.</p>
+<p>You could use CommitEntry to manage User_Dict</p>
+</blockquote>
+<h5 id="updateuserdictdictentry-commits-number-new_entry_prefix-string">updateUserdict(DictEntry, commits : number, new_entry_prefix : string)</h5>
+<blockquote>
+<p>Update <code>UserDictionary</code> with specific <code>DictEntry</code></p>
+<p>If <code>commits</code> &lt; 0 this entry would be marked as deleted.</p>
+<p>If <code>commits</code> &gt; 0 then increasing the frequency of this entry committed.</p>
+<p><code>new_entry_prefix</code> would become the code prefix of this entry  </p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="segment">Segment</h3>
+<blockquote>
+<h4 id="functions_4">Functions</h4>
+<blockquote>
+<h5 id="segmentstart_pos-number-end_pos-number">Segment(start_pos : number, end_pos : number)</h5>
+<blockquote>
+<p>Returns Instance of Segment</p>
+</blockquote>
+</blockquote>
+<h4 id="methods_3">Methods</h4>
+<blockquote>
+<h5 id="clear">clear()</h5>
+<blockquote>
+<p>clean tags, reset menu,set Selected_index to 0,Clear prompt</p>
+</blockquote>
+<h5 id="close">close()</h5>
+<blockquote>
+<p>auto select Candidate then split into selected segment and  unselcted segment</p>
+</blockquote>
+<h5 id="reopencaret_pos-number">reopen(caret_pos : number)</h5>
+</blockquote>
+</blockquote>
+<pre><code class="C++">bool Segment::Reopen(size_t caret_pos) {
+  if (status &lt; kSelected) {
+    return false;
+  }
+  const size_t original_end_pos = start + length;
+  if (original_end_pos == caret_pos) {
+    // reuse previous candidates and keep selection
+    if (end &lt; original_end_pos) {
+      // restore partial-selected segment
+      end = original_end_pos;
+      tags.erase(kPartialSelectionTag);
+    }
+    status = kGuess;
+  }
+  else {
+    status = kVoid;
+  }
+  return true;
+}
+</code></pre>
+
+<blockquote>
+<blockquote>
+<h5 id="has_tagtag-string">has_tag(tag : string)</h5>
+<blockquote>
+<p>Returns <em>if</em> the tag has been found.</p>
+</blockquote>
+<h5 id="get_candidate_atindex-number">get_candidate_at(index : number)</h5>
+<blockquote>
+<p>Returns <code>Candidate</code> of specific index.</p>
+</blockquote>
+<h5 id="get_selected_candidate">get_selected_candidate()</h5>
+<blockquote>
+<p>Returns <code>Candidte</code> of selected candidte.</p>
+</blockquote>
+</blockquote>
+<h4 id="getters_1">Getters</h4>
+<blockquote>
+<h5 id="status-string">status : string</h5>
+<blockquote>
+<p>Returns <code>"kVoid"</code> <code>"kVGuess"</code> <code>"kselected"</code> or <code>"kConfirmed"</code></p>
+</blockquote>
+<h5 id="start-number">start : number</h5>
+<h5 id="_end-number">_end : number</h5>
+<h5 id="length-number">length : number</h5>
+<blockquote>
+<p>Returns Segment's length</p>
+</blockquote>
+<h5 id="tags-table">tags : table</h5>
+<blockquote>
+<p>Returns a set of tags</p>
+</blockquote>
+<h5 id="menu-menu">menu : Menu</h5>
+<h5 id="selected_index-number">selected_index : number</h5>
+<h5 id="prompt-string">prompt : string</h5>
+</blockquote>
+<h4 id="setters_1">Setters</h4>
+<blockquote>
+<h5 id="status-string_1">status : string</h5>
+<h5 id="start-number_1">start : number</h5>
+<h5 id="_end-number_1">_end : number</h5>
+<h5 id="length-number_1">length : number</h5>
+<h5 id="tags-table_1">tags : table</h5>
+<h5 id="menu-menu_1">menu : Menu</h5>
+<h5 id="selected_index-number_1">selected_index : number</h5>
+<h5 id="prompt-string_1">prompt : string</h5>
+</blockquote>
+</blockquote>
+<h3 id="candidate">Candidate</h3>
+<blockquote>
+<h4 id="functions_5">Functions</h4>
+<blockquote>
+<h5 id="candidatetype-string-start-number-end-number-text-string-comment-string">Candidate(type : string, start : number, end: number, text : string, comment : string)</h5>
+<blockquote>
+<p>Returns Instance of <code>Candidate</code></p>
+</blockquote>
+</blockquote>
+<h4 id="methods_4">Methods</h4>
+<blockquote>
+<h5 id="get_dynamic_type">get_dynamic_type()</h5>
+<h5 id="get_genuinecandidate">get_genuine(Candidate)</h5>
+<h5 id="get_genuinescandidate">get_genuines(Candidate)</h5>
+</blockquote>
+<h4 id="getters_2">Getters</h4>
+<blockquote>
+<h5 id="type">type</h5>
+<h5 id="start">start</h5>
+<h5 id="_end">_end</h5>
+<h5 id="quality">quality</h5>
+<h5 id="text_2">text</h5>
+<h5 id="comment_2">comment</h5>
+<h5 id="preedit_2">preedit</h5>
+</blockquote>
+<h4 id="setters_2">Setters</h4>
+<blockquote>
+<h5 id="type_1">type</h5>
+<h5 id="start_1">start</h5>
+<h5 id="_end_1">_end</h5>
+<h5 id="quality_1">quality</h5>
+<h5 id="text_3">text</h5>
+<h5 id="comment_3">comment</h5>
+<h5 id="preedit_3">preedit</h5>
+</blockquote>
+</blockquote>
+<h3 id="translation">Translation</h3>
+<blockquote>
+<h4 id="functions_6">Functions</h4>
+<blockquote>
+<h5 id="translationinitfunction-function">Translation(initFunction : function)</h5>
+<blockquote>
+<p>Returns Instance of <code>Translation</code>,and call the initFunction.</p>
+</blockquote>
+</blockquote>
+<h4 id="methods_5">Methods</h4>
+<blockquote>
+<h5 id="iter">iter()</h5>
+<blockquote>
+<p>Returns lua iterator for <code>Translation</code> that iterate <code>Candidate</code></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="reversedb">ReverseDb</h3>
+<blockquote>
+<h4 id="functions_7">Functions</h4>
+<blockquote>
+<h5 id="reversedbreversedb_file_name-string">ReverseDb(ReverseDb_File_Name : string)</h5>
+<blockquote>
+<p>Returns Instance of <code>ReverseDb</code></p>
+</blockquote>
+</blockquote>
+<h4 id="methods_6">Methods</h4>
+<blockquote>
+<h5 id="lookupkey-string">lookup(key : string)</h5>
+<blockquote>
+<p>Returns <code>string</code> of reverseDb lookup result</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="segmentation">Segmentation</h3>
+<blockquote>
+<h4 id="methods_7">Methods</h4>
+<blockquote>
+<h5 id="empty">empty</h5>
+<h5 id="back">back</h5>
+<h5 id="pop_back">pop_back</h5>
+<h5 id="reset_length">reset_length</h5>
+<h5 id="add_segment">add_segment</h5>
+<h5 id="forward">forward</h5>
+<h5 id="trim">trim</h5>
+<h5 id="has_finished_segmentation">has_finished_segmentation</h5>
+<h5 id="get_current_start_position">get_current_start_position</h5>
+<h5 id="get_current_end_position">get_current_end_position</h5>
+<h5 id="get_current_segment_length">get_current_segment_length</h5>
+<h5 id="get_confirmed_position">get_confirmed_position</h5>
+</blockquote>
+<h4 id="getters_3">Getters</h4>
+<blockquote>
+<h5 id="input-string">input : string</h5>
+</blockquote>
+<h4 id="setters_3">Setters</h4>
+<blockquote>
+<h5 id="input-string_1">input : string</h5>
+</blockquote>
+</blockquote>
+<h3 id="menu">Menu</h3>
+<blockquote>
+<h4 id="functions_8">Functions</h4>
+<blockquote>
+<h5 id="add_translation">add_translation</h5>
+<h5 id="prepare">prepare</h5>
+<h5 id="get_candidate_at">get_candidate_at</h5>
+<h5 id="candidate_count">candidate_count</h5>
+<h5 id="empty_1">empty</h5>
+</blockquote>
+</blockquote>
+<h3 id="keyevent">KeyEvent</h3>
+<blockquote>
+<h4 id="methods_8">Methods</h4>
+<blockquote>
+<h5 id="shift">shift</h5>
+<h5 id="ctrl">ctrl</h5>
+<h5 id="alt">alt</h5>
+<h5 id="caps">caps</h5>
+<h5 id="super">super</h5>
+<h5 id="release">release</h5>
+<h5 id="repr">repr</h5>
+<h5 id="eq">eq</h5>
+<h5 id="lt">lt</h5>
+</blockquote>
+<h4 id="getters_4">Getters</h4>
+<blockquote>
+<h5 id="keycode">keycode</h5>
+<h5 id="modifier">modifier</h5>
+</blockquote>
+</blockquote>
+<h3 id="engine">Engine</h3>
+<blockquote>
+<h4 id="methods_9">Methods</h4>
+<blockquote>
+<h5 id="commit_text">commit_text</h5>
+</blockquote>
+<h4 id="getters_5">Getters</h4>
+<blockquote>
+<h5 id="schema">schema</h5>
+<h5 id="context">context</h5>
+<h5 id="active_engine">active_engine</h5>
+</blockquote>
+<h4 id="setters_4">Setters</h4>
+<blockquote>
+<h5 id="active_engine_1">active_engine</h5>
+</blockquote>
+</blockquote>
+<h3 id="context_1">Context</h3>
+<blockquote>
+<h4 id="methods_10">Methods</h4>
+<blockquote>
+<h5 id="commit">commit</h5>
+<h5 id="get_commit_text">get_commit_text</h5>
+<h5 id="get_script_text">get_script_text</h5>
+<h5 id="get_preedit">get_preedit</h5>
+<h5 id="is_composing">is_composing</h5>
+<h5 id="has_menu">has_menu</h5>
+<h5 id="get_selected_candidate_1">get_selected_candidate</h5>
+<h5 id="push_input">push_input</h5>
+<h5 id="pop_input">pop_input</h5>
+<h5 id="delete_input">delete_input</h5>
+<h5 id="clear_1">clear</h5>
+<h5 id="select">select</h5>
+<h5 id="confirm_current_selection">confirm_current_selection</h5>
+<h5 id="delete_current_selection">delete_current_selection</h5>
+<h5 id="confirm_previous_selection">confirm_previous_selection</h5>
+<h5 id="reopen_previous_selection">reopen_previous_selection</h5>
+<h5 id="clear_previous_segment">clear_previous_segment</h5>
+<h5 id="reopen_previous_segment">reopen_previous_segment</h5>
+<h5 id="clear_non_confirmed_composition">clear_non_confirmed_composition</h5>
+<h5 id="refresh_non_confirmed_composition">refresh_non_confirmed_composition</h5>
+<h5 id="set_option">set_option</h5>
+<h5 id="get_option">get_option</h5>
+<h5 id="set_property">set_property</h5>
+<h5 id="get_property">get_property</h5>
+<h5 id="clear_transient_options">clear_transient_options</h5>
+</blockquote>
+<h4 id="getters_6">Getters</h4>
+<blockquote>
+<h5 id="composition">composition</h5>
+<h5 id="input">input</h5>
+<h5 id="caret_pos">caret_pos</h5>
+<h5 id="commit_notifier">commit_notifier</h5>
+<h5 id="select_notifier">select_notifier</h5>
+<h5 id="update_notifier">update_notifier</h5>
+<h5 id="delete_notifier">delete_notifier</h5>
+<h5 id="option_update_notifier">option_update_notifier</h5>
+<h5 id="property_update_notifier">property_update_notifier</h5>
+<h5 id="unhandled_key_notifier">unhandled_key_notifier</h5>
+</blockquote>
+<h4 id="setters_5">Setters</h4>
+<blockquote>
+<h5 id="composition_1">composition</h5>
+<h5 id="input_1">input</h5>
+<h5 id="caret_pos_1">caret_pos</h5>
+</blockquote>
+</blockquote>
+<h3 id="preedit_4">Preedit</h3>
+<blockquote>
+<h4 id="getters_7">Getters</h4>
+<blockquote>
+<h5 id="text_4">text</h5>
+<h5 id="caret_pos_2">caret_pos</h5>
+<h5 id="sel_start">sel_start</h5>
+<h5 id="sel_end">sel_end</h5>
+</blockquote>
+<h4 id="setters_6">Setters</h4>
+<blockquote>
+<h5 id="text_5">text</h5>
+<h5 id="caret_pos_3">caret_pos</h5>
+<h5 id="sel_start_1">sel_start</h5>
+<h5 id="sel_end_1">sel_end</h5>
+</blockquote>
+</blockquote>
+<h3 id="composition_2">Composition</h3>
+<blockquote>
+<h4 id="methods_11">Methods</h4>
+<blockquote>
+<h5 id="empty_2">empty</h5>
+<h5 id="back_1">back</h5>
+<h5 id="pop_back_1">pop_back</h5>
+<h5 id="push_back">push_back</h5>
+<h5 id="has_finished_composition">has_finished_composition</h5>
+<h5 id="get_prompt">get_prompt</h5>
+</blockquote>
+</blockquote>
+<h3 id="schema_1">Schema</h3>
+<blockquote>
+<h4 id="functions_9">Functions</h4>
+<blockquote>
+<h5 id="schemaschema_id-string">Schema(schema_id : string)</h5>
+</blockquote>
+<h4 id="getters_8">Getters</h4>
+<blockquote>
+<h5 id="schema_id">schema_id</h5>
+<h5 id="schema_name">schema_name</h5>
+<h5 id="config">config</h5>
+<h5 id="page_size">page_size</h5>
+<h5 id="select_keys">select_keys</h5>
+</blockquote>
+<h4 id="setters_7">Setters</h4>
+<blockquote>
+<h5 id="config_1">config</h5>
+<h5 id="select_keys_1">select_keys</h5>
+</blockquote>
+</blockquote>
+<h3 id="config_2">Config</h3>
+<blockquote>
+<h4 id="methods_12">Methods</h4>
+<blockquote>
+<h5 id="load_from_file">load_from_file</h5>
+<h5 id="save_to_file">save_to_file</h5>
+<h5 id="is_null">is_null</h5>
+<h5 id="is_value">is_value</h5>
+<h5 id="is_list">is_list</h5>
+<h5 id="is_map">is_map</h5>
+<h5 id="get_bool">get_bool</h5>
+<h5 id="get_int">get_int</h5>
+<h5 id="get_double">get_double</h5>
+<h5 id="get_string">get_string</h5>
+<h5 id="get_list_size">get_list_size</h5>
+<h5 id="set_bool">set_bool</h5>
+<h5 id="set_int">set_int</h5>
+<h5 id="set_double">set_double</h5>
+<h5 id="set_string">set_string</h5>
+</blockquote>
+</blockquote>
+<h3 id="connection">Connection</h3>
+<blockquote>
+<h4 id="methods_13">Methods</h4>
+<blockquote>
+<h5 id="disconnect">disconnect</h5>
+</blockquote>
+</blockquote>
+<h3 id="notifier">Notifier</h3>
+<blockquote>
+<h4 id="methods_14">Methods</h4>
+<blockquote>
+<h5 id="connect">connect</h5>
+</blockquote>
+</blockquote>
+<h3 id="optionupdatenotifier">OptionUpdateNotifier</h3>
+<blockquote>
+<h4 id="methods_15">Methods</h4>
+<blockquote>
+<h5 id="connect_1">connect</h5>
+</blockquote>
+</blockquote>
+<h3 id="propertyupdatenotifier">PropertyUpdateNotifier</h3>
+<blockquote>
+<h4 id="methods_16">Methods</h4>
+<blockquote>
+<h5 id="connect_2">connect</h5>
+</blockquote>
+</blockquote>
+<h3 id="keyeventnotifer">KeyEventNotifer</h3>
+<blockquote>
+<h4 id="methods_17">Methods</h4>
+<blockquote>
+<h5 id="connect_3">connect</h5>
+</blockquote>
+</blockquote>
+<h3 id="log">Log</h3>
+<blockquote>
+<h4 id="functions_10">Functions</h4>
+<blockquote>
+<h5 id="info">info</h5>
+<h5 id="warning">warning</h5>
+<h5 id="error">error</h5>
+</blockquote>
+</blockquote>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../usage/" class="btn btn-neutral" title="Usage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../usage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
