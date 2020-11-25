@@ -3,6 +3,16 @@
 > All librime-lua module should export as a table like `{init=function, func=function, fini=function}`
 
 **Tips:** *in this document parameters were presented as `function(parameter : type)` or `function(type)`*
+*function() : type represented return type*
+*Pasted code is code of C++ source I don't understand*
+
+> You can call Functions of Component globally like `Functions()`
+
+> Call Methods of Component like `ComponentObject:method()`
+
+> Getters means properties can be accessed like `Component.property`
+
+> Setters means properties can be access like `Component.property = value`
 
 ## Example
 **example.schema.yaml**
@@ -123,51 +133,54 @@ return {init = ModuleInit}
 
 ### DictEntry
 > #### Functions
-> > ##### DictEntry()
+> > ##### DictEntry() : DictEntry
+> > > Instance a empty `DictEntry`
 > #### Getters
-> > ##### text
-> > ##### comment
-> > ##### preedit
-> > ##### weight
-> > ##### commit_count
-> > ##### custom_code
-> > ##### remaining_code_length
-> > ##### code
+> > ##### text : string
+> > ##### comment : string
+> > ##### preedit : string
+> > ##### weight : number 
+> > ##### commit_count : number
+> > ##### custom_code : string
+> > ##### remaining_code_length : number
+> > ##### code : Code
 > #### Setters
-> > ##### text
-> > ##### comment
-> > ##### preedit
-> > ##### weight
-> > ##### commit_count
-> > ##### custom_code
-> > ##### remaining_code_length
-> > ##### code
+> > ##### text : string
+> > ##### comment : string
+> > ##### preedit : string
+> > ##### weight : number 
+> > ##### commit_count : number
+> > ##### custom_code : string
+> > ##### remaining_code_length : number
+> > ##### code : Code
 ### Code
 > #### Functions
 > > ##### Code()
+> > > Create Empty `Code`
 > #### Methods
-> > ##### push
-> > ##### print
+> > ##### push(code : number)
+> > > push code to `Code`
+> > ##### print()
+> > > print current code
 ### CommitEntry
-> #### Functions
-> > ##### CommitEntry()
 > #### Methods
-> > ##### get()
+> > ##### get() : {DictEntry}
+> > > Returns array of `DictEntry` in `CommitEntry`
 ### Memory
-
+  
 > #### Introduction
 
 > > A compoent that could access to `Dictionary` and `UserDictionary`
 
 > #### Functions
 
-> > ##### Memory(Engine, Schema)
+> > ##### Memory(Engine, Schema) : Memory
 
 > > > Returns the Instance of *Memory*
 
 > > > Instance a `Memory` Object with given `Engine` and `Scehma`
 
-> > ##### CustomMemory(Engine, schema_id="", namespace="translator") 
+> > ##### CustomMemory(Engine, schema_id="", namespace="translator") : Memory
 
 > > > Returns the Instance of *Memory*
 
@@ -210,7 +223,7 @@ translator:
 
 > #### Methods
 
-> > ##### dictLookup(input : string, isExpand : boolean)
+> > ##### dictLookup(input : string, isExpand : boolean) : boolean
 
 > > > Returns *true* if Lookup success.
 
@@ -218,7 +231,7 @@ translator:
 
 > > > If `isExpand` were true, it would expand your `input` as a prefix. For example, the input is "hq", all results with the prefix "hq" in code  would be output.
 
-> > ##### userLookup(input : string, isExpand : boolean)
+> > ##### userLookup(input : string, isExpand : boolean) : boolean
 
 > > > Returns *true* if Lookup success.
 
@@ -229,10 +242,22 @@ translator:
 > > ##### iter_dict()
 
 > > > Returns a Lua Iterator Of `Dictionary` Lookup Results which iterates a dictEntry.
-
-> > ##### iter_user()
+```lua
+for entry in mem:iter_dict()
+ do
+ print(entry.text)
+end
+```
+> > ##### iter_user() 
 
 > > > Returns a Lua Iterator Of `UserDictionary` Lookup Results which iterates a dictEntry.
+
+```lua
+for entry in mem:iter_user()
+ do
+ print(entry.text)
+end
+```
 
 > > ##### memorize(function(CommitEntry))
 
@@ -253,16 +278,13 @@ translator:
 ### Segment
 
 > #### Functions
-> > ##### Segment(start_pos : number, end_pos : number)
+> > ##### Segment(start_pos : number, end_pos : number) : Segment
 > > > Returns Instance of Segment
 > #### Methods
-> > ##### clear()
+> > ##### clear() 
 > > > clean tags, reset menu,set Selected_index to 0,Clear prompt
-
-
 > > ##### close()
 > > > auto select Candidate then split into selected segment and  unselcted segment
-
 > > ##### reopen(caret_pos : number)
 ```C++
 bool Segment::Reopen(size_t caret_pos) {
@@ -285,13 +307,12 @@ bool Segment::Reopen(size_t caret_pos) {
   return true;
 }
 ```
-> > ##### has_tag(tag : string)
+> > ##### has_tag(tag : string) : boolean
 > > > Returns *if* the tag has been found.
-> > ##### get_candidate_at(index : number)
+> > ##### get_candidate_at(index : number) : number
 > > > Returns `Candidate` of specific index.
-> > ##### get_selected_candidate()
+> > ##### get_selected_candidate() : Candidate
 > > > Returns `Candidte` of selected candidte.
-
 > #### Getters
 > > ##### status : string
 > > > Returns `"kVoid"` `"kVGuess"` `"kselected"` or `"kConfirmed"`
@@ -317,28 +338,63 @@ bool Segment::Reopen(size_t caret_pos) {
 
 ### Candidate
 > #### Functions
-> > ##### Candidate(type : string, start : number, end: number, text : string, comment : string)
+> > ##### Candidate(type : string, start : number, end: number, text : string, comment : string) : Candidate
 > > > Returns Instance of `Candidate`
 > #### Methods
-> > ##### get_dynamic_type()
-> > ##### get_genuine(Candidate)
-> > ##### get_genuines(Candidate)
+> > ##### get_dynamic_type() : string
+```c++
+string dynamic_type(T &c) {
+  if (dynamic_cast<Phrase *>(&c))
+    return "Phrase";
+  if (dynamic_cast<SimpleCandidate *>(&c))
+    return "Simple";
+  if (dynamic_cast<ShadowCandidate *>(&c))
+    return "Shadow";
+  if (dynamic_cast<UniquifiedCandidate *>(&c))
+    return "Uniquified";
+  return "Other";
+}
+```
+> > ##### get_genuine(Candidate) : Candidate
+```c++
+an<Candidate>
+Candidate::GetGenuineCandidate(const an<Candidate>& cand) {
+  auto uniquified = As<UniquifiedCandidate>(cand);
+  return UnpackShadowCandidate(uniquified ? uniquified->items().front() : cand);
+}
+```
+> > ##### get_genuines(Candidate) : Candidate
+```c++
+vector<of<Candidate>>
+Candidate::GetGenuineCandidates(const an<Candidate>& cand) {
+  vector<of<Candidate>> result;
+  if (auto uniquified = As<UniquifiedCandidate>(cand)) {
+    for (const auto& item : uniquified->items()) {
+      result.push_back(UnpackShadowCandidate(item));
+    }
+  }
+  else {
+    result.push_back(UnpackShadowCandidate(cand));
+  }
+  return result;
+}
+```
 > #### Getters
-> > ##### type
-> > ##### start
-> > ##### \_end
-> > ##### quality
-> > ##### text
-> > ##### comment
-> > ##### preedit
+> > ##### type : string
+> > ##### start : number
+> > ##### \_end : number
+> > ##### quality : number
+> > ##### text : string
+> > ##### comment : string
+> > ##### preedit : string
 > #### Setters
-> > ##### type
-> > ##### start
-> > ##### \_end
-> > ##### quality
-> > ##### text
-> > ##### comment
-> > ##### preedit
+> > ##### type : string
+> > ##### start : number
+> > ##### \_end : number
+> > ##### quality : number
+> > ##### text : string
+> > ##### comment : string
+> > ##### preedit : string
 ### Translation
 > #### Functions
 > > ##### Translation(initFunction : function)
@@ -346,170 +402,288 @@ bool Segment::Reopen(size_t caret_pos) {
 > #### Methods
 > > ##### iter()
 > > > Returns lua iterator for `Translation` that iterate `Candidate`
+
+```lua
+for can in translation:iter()
+do 
+  print(can.text)
+end
+```
+
 ### ReverseDb
 > #### Functions
-> > ##### ReverseDb(ReverseDb_File_Name : string)
+> > ##### ReverseDb(ReverseDb_File_Name : string) : ReverseDb
 > > > Returns Instance of `ReverseDb`
 > #### Methods
-> > ##### lookup(key : string)
+> > ##### lookup(key : string) : string
 > > > Returns `string` of reverseDb lookup result
 
 ### Segmentation
 > #### Methods
-> > ##### empty
-> > ##### back
-> > ##### pop_back
-> > ##### reset_length
-> > ##### add_segment
-> > ##### forward
-> > ##### trim
-> > ##### has_finished_segmentation
-> > ##### get_current_start_position
-> > ##### get_current_end_position
-> > ##### get_current_segment_length
-> > ##### get_confirmed_position
+> > ##### empty() : boolean
+> > ##### back() : Segment
+> > > Returns last element of `Segmentation`
+> > ##### pop_back()
+> > > Delete the last element of `Segmentation` 
+> > ##### reset_length(length : number)
+> > > Reset `Segmentation` with given length 
+> > ##### add_segment(Segment)
+> > > Add given `Segment` at `Segmentation`'s end
+> > ##### forward()
+```C++
+// finalize a round
+bool Segmentation::Forward() {
+  if (empty() || back().start == back().end)
+    return false;
+  // initialize an empty segment for the next round
+  push_back(Segment(back().end, back().end));
+  return true;
+}
+```
+> > ##### trim()
+```c++
+// remove empty trailing segment
+bool Segmentation::Trim() {
+  if (!empty() && back().start == back().end) {
+    pop_back();
+    return true;
+  }
+  return false;
+}
+```
+> > ##### has_finished_segmentation()
+```C++
+bool Segmentation::HasFinishedSegmentation() const {
+  return (empty() ? 0 : back().end) >= input_.length();
+}
+```
+> > ##### get_current_start_position() : number
+```c++
+size_t Segmentation::GetCurrentStartPosition() const {
+  return empty() ? 0 : back().start;
+}
+```
+> > ##### get_current_end_position() : number
+```C++
+size_t Segmentation::GetCurrentEndPosition() const {
+  return empty() ? 0 : back().end;
+}
+
+```
+> > ##### get_current_segment_length : number
+```c++
+size_t Segmentation::GetCurrentSegmentLength() const {
+  return empty() ? 0 : (back().end - back().start);
+}
+```
+> > ##### get_confirmed_position : number
+```c++
+size_t Segmentation::GetConfirmedPosition() const {
+  size_t k = 0;
+  for (const Segment& seg : *this) {
+    if (seg.status >= Segment::kSelected)
+      k = seg.end;
+  }
+  return k;
+}
+```
 > #### Getters
 > > ##### input : string
 > #### Setters
 > > ##### input : string
 ### Menu
 > #### Functions
-> > ##### add_translation
-> > ##### prepare
-> > ##### get_candidate_at
-> > ##### candidate_count
-> > ##### empty
+> > ##### add_translation(Translation)
+> > ##### prepare(requested : number) : number
+```C++
+size_t Menu::Prepare(size_t requested) {
+  DLOG(INFO) << "preparing " << requested << " candidates.";
+  while (candidates_.size() < requested && !result_->exhausted()) {
+    if (auto cand = result_->Peek()) {
+      candidates_.push_back(cand);
+    }
+    result_->Next();
+  }
+  return candidates_.size();
+}
+```
+> > ##### get_candidate_at(index : number) : Candidate
+> > ##### candidate_count() : number
+> > ##### empty() : boolean
 ### KeyEvent
 > #### Methods
-> > ##### shift
-> > ##### ctrl
-> > ##### alt
-> > ##### caps
-> > ##### super
-> > ##### release
-> > ##### repr
-> > ##### eq
-> > ##### lt
+> > ##### shift : boolean
+> > ##### ctrl : boolean
+> > ##### alt : boolean
+> > ##### caps : boolean
+> > ##### super : boolean
+> > ##### release : boolean
+> > ##### repr : string 
+> > ##### eq ： boolean
+> > > Returns is euqual to other `KeyEvent`
+> > ##### lt : boolean
+> > > Returns is less than other `KeyEvent`
 > #### Getters
-> > ##### keycode
-> > ##### modifier
+> > ##### keycode : number
+> > ##### modifier : number
 ### Engine
 > #### Methods
-> > ##### commit_text
+> > ##### commit_text(text : string)
+> > > commit given text
 > #### Getters
-> > ##### schema
-> > ##### context
-> > ##### active_engine
+> > ##### schema : Schema
+> > > returns current `Schema`
+> > ##### context : Context
+> > > returns current `Context`
+> > ##### active_engine : Engine
 > #### Setters
-> > ##### active_engine
+> > ##### active_engine(Engine)
 ### Context
 > #### Methods
-> > ##### commit
-> > ##### get_commit_text
-> > ##### get_script_text
-> > ##### get_preedit
-> > ##### is_composing
-> > ##### has_menu
-> > ##### get_selected_candidate
-> > ##### push_input
-> > ##### pop_input
-> > ##### delete_input
-> > ##### clear
-> > ##### select
-> > ##### confirm_current_selection
-> > ##### delete_current_selection
-> > ##### confirm_previous_selection
-> > ##### reopen_previous_selection
-> > ##### clear_previous_segment
-> > ##### reopen_previous_segment
-> > ##### clear_non_confirmed_composition
-> > ##### refresh_non_confirmed_composition
-> > ##### set_option
-> > ##### get_option
-> > ##### set_property
-> > ##### get_property
-> > ##### clear_transient_options
+> > ##### commit() : boolean
+> > ##### get_commit_text() : string
+> > ##### get_script_text() : string
+> > ##### get_preedit() : string
+> > ##### is_composing() : boolean
+> > ##### has_menu() : boolean
+> > ##### get_selected_candidate() : Candidate
+> > ##### push_input(input : string) : boolean
+> > ##### pop_input(len : number) : boolean
+> > > delete input of given amount
+```C++
+bool Context::PopInput(size_t len) {
+  if (caret_pos_ < len)
+    return false;
+  caret_pos_ -= len;  // differ to DeleteInput
+  input_.erase(caret_pos_, len);
+  update_notifier_(this);
+  return true;
+}
+```
+> > ##### delete_input(len : number) : boolean
+> > > delete input of given amount
+```C++
+bool Context::DeleteInput(size_t len) {
+  if (caret_pos_ + len > input_.length())
+    return false;
+  input_.erase(caret_pos_, len);
+  update_notifier_(this);
+  return true;
+}
+
+```
+> > ##### clear()
+> > ##### select(index : number) : boolean
+> > ##### confirm_current_selection() : boolean
+> > ##### delete_current_selection() : boolean
+> > ##### confirm_previous_selection() : boolean
+> > ##### reopen_previous_selection() : boolean
+> > ##### clear_previous_segment() : boolean
+> > ##### reopen_previous_segment() : boolean
+> > ##### clear_non_confirmed_composition() : boolean
+> > ##### refresh_non_confirmed_composition() : boolean
+> > ##### set_option(name : string, value : boolean)
+> > ##### get_option(name : string)
+> > ##### set_property(name : string,value : string)
+> > ##### get_property(name : string) : string
+> > ##### clear_transient_options()
+```c++
+void Context::ClearTransientOptions() {
+  auto opt = options_.lower_bound("_");
+  while (opt != options_.end() &&
+         !opt->first.empty() && opt->first[0] == '_') {
+    options_.erase(opt++);
+  }
+  auto prop = properties_.lower_bound("_");
+  while (prop != properties_.end() &&
+         !prop->first.empty() && prop->first[0] == '_') {
+    properties_.erase(prop++);
+  }
+}
+```
 
 > #### Getters
-> > ##### composition
-> > ##### input
-> > ##### caret_pos
-> > ##### commit_notifier
-> > ##### select_notifier
-> > ##### update_notifier
-> > ##### delete_notifier
-> > ##### option_update_notifier
-> > ##### property_update_notifier
-> > ##### unhandled_key_notifier
+> > ##### composition : Composition
+> > ##### input : string
+> > ##### caret_pos : number
+> > ##### commit_notifier : Notifier
+> > ##### select_notifier : Notifier
+> > ##### update_notifier : Notifier
+> > ##### delete_notifier : Notifier
+> > ##### option_update_notifier : Notifier
+> > ##### property_update_notifier : Notifier
+> > ##### unhandled_key_notifier : Notifier
 > #### Setters
-> > ##### composition
-> > ##### input
-> > ##### caret_pos
+> > ##### composition : Composition
+> > ##### input : string
+> > ##### caret_pos : number
 ### Preedit
 > #### Getters
-> > ##### text
-> > ##### caret_pos
-> > ##### sel_start
-> > ##### sel_end
+> > ##### text : string
+> > ##### caret_pos : number
+> > ##### sel_start : number
+> > ##### sel_end : number
 > #### Setters
-> > ##### text
-> > ##### caret_pos
-> > ##### sel_start
-> > ##### sel_end
+> > ##### text : string
+> > ##### caret_pos : number
+> > ##### sel_start : number
+> > ##### sel_end : number
 ### Composition
+> Extends `Segmentation`
 > #### Methods
-> > ##### empty
-> > ##### back
-> > ##### pop_back
-> > ##### push_back
-> > ##### has_finished_composition
-> > ##### get_prompt
+> > ##### empty() : boolean
+> > ##### back() : Composition
+> > ##### pop_back() : bool
+> > ##### push_back(Segmentation)
+> > ##### has_finished_composition() : bool
+> > ##### get_prompt() : string
 ### Schema
 > #### Functions
-> > ##### Schema(schema_id : string)
+> > ##### Schema(schema_id : string) : Schema
 > #### Getters
-> > ##### schema_id
-> > ##### schema_name
-> > ##### config
-> > ##### page_size
-> > ##### select_keys
+> > ##### schema_id : string
+> > ##### schema_name : string
+> > ##### config : Config
+> > ##### page_size : number 
+> > ##### select_keys : string
 > #### Setters
-> > ##### config
-> > ##### select_keys
+> > ##### config : Config
+> > ##### select_keys : string
 ### Config
 > #### Methods
-> > ##### load_from_file
-> > ##### save_to_file
-> > ##### is_null
-> > ##### is_value
-> > ##### is_list
-> > ##### is_map
-> > ##### get_bool
-> > ##### get_int
-> > ##### get_double
-> > ##### get_string
-> > ##### get_list_size
-> > ##### set_bool
-> > ##### set_int
-> > ##### set_double
-> > ##### set_string
+> > ##### load_from_file(file_name : string) : boolean
+> > ##### save_to_file(file_name : string) : boolean
+> > ##### is_null(path : string) : boolean
+> > ##### is_value(path : string) : boolean
+> > ##### is_list(path : string) : boolean
+> > ##### is_map(path : string) : boolean
+> > ##### get_bool(path : string) : boolean
+> > ##### get_int(path : string) : number
+> > ##### get_double(path : string) : number
+> > ##### get_string(path : string) : string
+> > ##### get_list_size(path : string) : number
+> > ##### set_bool(path : string, value : bool) : bool 
+> > ##### set_int(path : string, value : number) : boolean
+> > ##### set_double(path : string, value : number) : boolean
+> > ##### set_string(path : string, value : string) : boolean
 ### Connection
 > #### Methods
-> > ##### disconnect
+> > ##### disconnect()
 ### Notifier
 > #### Methods
-> > ##### connect
+> > ##### connect(Notifier, Context) : Connection
 ### OptionUpdateNotifier
 > #### Methods
-> > ##### connect
+> > ##### connect(OptionUpdateNotifier, string): Connection
 ### PropertyUpdateNotifier
 > #### Methods
-> > ##### connect
+> > ##### connect(PropertyUpdateNotifier, string): Connection
 ### KeyEventNotifer
 > #### Methods
-> > ##### connect
+> > ##### connect(KeyEventNotifer, KeyEvent) : Connection
 ### Log
+> Use `Log` to logging your lua function.
 > #### Functions
-> > ##### info
-> > ##### warning
-> > ##### error
+> > ##### info(string)
+> > ##### warning(string)
+> > ##### error(string)
