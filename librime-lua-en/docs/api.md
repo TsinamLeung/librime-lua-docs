@@ -138,6 +138,7 @@ return {init = ModuleInit}
 > #### Getters
 > > ##### text : string
 > > ##### comment : string
+> > > if use expand dictionary lookup, it would write raminging code to comment
 > > ##### preedit : string
 > > ##### weight : number 
 > > ##### commit_count : number
@@ -274,6 +275,10 @@ end
 > > > If `commits` > 0 then increasing the frequency of this entry committed.
 
 > > > `new_entry_prefix` would become the code prefix of this entry  
+
+> > ##### decode(Code) : table(string)
+
+> > decode Code to string code
 
 ### Segment
 
