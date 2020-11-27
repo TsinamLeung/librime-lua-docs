@@ -400,6 +400,72 @@ Candidate::GetGenuineCandidates(const an<Candidate>& cand) {
 > > ##### text : string
 > > ##### comment : string
 > > ##### preedit : string
+### Phrase
+> #### Functions
+> > ##### Candidate(type : string, start : number, end: number, text : string, comment : string) : Candidate
+> > > Returns Instance of `Candidate`
+> #### Methods
+> > ##### get_dynamic_type() : string
+```c++
+string dynamic_type(T &c) {
+  if (dynamic_cast<Phrase *>(&c))
+    return "Phrase";
+  if (dynamic_cast<SimpleCandidate *>(&c))
+    return "Simple";
+  if (dynamic_cast<ShadowCandidate *>(&c))
+    return "Shadow";
+  if (dynamic_cast<UniquifiedCandidate *>(&c))
+    return "Uniquified";
+  return "Other";
+}
+```
+> > ##### get_genuine(Candidate) : Candidate
+```c++
+an<Candidate>
+Candidate::GetGenuineCandidate(const an<Candidate>& cand) {
+  auto uniquified = As<UniquifiedCandidate>(cand);
+  return UnpackShadowCandidate(uniquified ? uniquified->items().front() : cand);
+}
+```
+> > ##### get_genuines(Candidate) : Candidate
+```c++
+vector<of<Candidate>>
+Candidate::GetGenuineCandidates(const an<Candidate>& cand) {
+  vector<of<Candidate>> result;
+  if (auto uniquified = As<UniquifiedCandidate>(cand)) {
+    for (const auto& item : uniquified->items()) {
+      result.push_back(UnpackShadowCandidate(item));
+    }
+  }
+  else {
+    result.push_back(UnpackShadowCandidate(cand));
+  }
+  return result;
+}
+```
+> > ##### toCandidate() : Candidate
+> #### Getters
+> > ##### language : Language 
+> > > Not wrap to lua yet
+> > ##### type : string
+> > ##### start : number
+> > ##### \_end : number
+> > ##### quality : number
+> > ##### text : string
+> > ##### comment : string
+> > ##### preedit : string
+> > ##### weight : number
+> > ##### code : Code
+> > ##### entry : DictEntry
+> #### Setters
+> > ##### type : string
+> > ##### start : number
+> > ##### \_end : number
+> > ##### quality : number
+> > ##### comment : string
+> > ##### preedit : string
+> > ##### weight : number
+
 ### Translation
 > #### Functions
 > > ##### Translation(initFunction : function)
