@@ -79,16 +79,29 @@ return filter
 
 **aProcessor**
 
+*Important*: **All Processor should return a number which is the status of processing**
+*the following code were wrote on librime, shows the meanning of processResult*
 ```
-local function filter(key,env)
+enum ProcessResult {
+  kRejected,  // do the OS default processing
+  kAccepted,  // consume it
+  kNoop,      // leave it to other processors
+};
+```
+*the order stands for the status number which is should be return by lua Processors*
+in this example *0* Stands for *kRejected*, 1 stands for *kAccepted*
+```
+local function processor(key,env)
 	print(key.keycode)
+  return 2
+  -- kAccepted
 end
 
 local function init(env)
 	print(env.engine.schema.schema_id)
 end
 
-return {init = init, func = filter, fini = nil}
+return {init = init, func = processor, fini = nil}
 ```
 
 ## init
